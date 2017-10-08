@@ -44,9 +44,14 @@ install (){
 	adb install $1
 }
 
-echo "Hello World"
-pull com.android.insecurebankv2
-# backsmali ~/Desktop/Labs/Android-InsecureBankv2/InsecureBankv2.apk
-# build ~/Desktop/InsecureBankv2 app.apk
-# sign app.apk
-echo "Done"
+demo () {
+	echo "Hello World"
+	pull com.android.insecurebankv2
+	backsmali com.android.insecurebankv2.apk
+	build com.android.insecurebankv2 app.apk
+	sign app.apk
+	install app.apk
+	echo "done"
+}
+
+demo
