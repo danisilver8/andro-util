@@ -1,9 +1,14 @@
 #!/usr/bin/env bash
 
+list-packages () {
+	adb shell pm list packages | cut -d: -f2
+}
+
 pull (){
 	# $1 - package name
-	mkdir $1
-	adb pull /data/app/$1/base.apk $1/app.apk
+	echo "pulling package $1"	
+	path="$(adb shell pm path $1 | sed 's/package://g' | tr -d '\r' )"
+	adb pull "$path" "$1.apk"
 }
 
 backsmali (){
@@ -40,7 +45,8 @@ install (){
 }
 
 echo "Hello World"
-backsmali ~/Desktop/Labs/Android-InsecureBankv2/InsecureBankv2.apk
-build ~/Desktop/InsecureBankv2 app.apk
-sign app.apk
+pull com.android.insecurebankv2
+# backsmali ~/Desktop/Labs/Android-InsecureBankv2/InsecureBankv2.apk
+# build ~/Desktop/InsecureBankv2 app.apk
+# sign app.apk
 echo "Done"
