@@ -33,7 +33,7 @@ sign (){
 		echo "found key"
 	else
 		echo "creating new key"
-		keytool -genkeypair -keyalg RSA -alias androiddebugkey -keypass android -keystore $keystore -storepass android -dname "CN=Android Debug,O=Android,C=US" -validity 9999
+		keytool -genkeypair -keyalg RSA -alias androiddebugkey -keypass android -keystore $keystore -storepass android -dname "CN=Android Debug,O=Android,C=US" -validity 9999 > /dev/null
 	fi
 
 	jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -storepass android -keystore $keystore $1 androiddebugkey
@@ -54,4 +54,4 @@ demo () {
 	echo "done"
 }
 
-demo
+# demo
