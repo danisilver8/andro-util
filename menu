@@ -1,0 +1,46 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $DIR/main.sh
+
+read -p "enter package name:" package
+
+PS3='Please enter your choice: '
+options=("set-package" "pull" "backsmali" "build" "install" "exit")
+select opt in "${options[@]}"
+do
+	case $opt in
+		"set-package")
+			read -p "enter package name:" package
+			;;
+		"pull")
+			echo "pulling package $package"
+			pull $package
+			;;
+		"backsmali")
+			echo "backsmalling $package"
+			backsmali "$package.apk"
+			;;
+		"build")
+			echo "building $package"
+			build $package "mod-$package.apk"
+			sign "mod-$package.apk"
+			;;
+		"install")
+			echo "installing $package"
+			if [ -f "mod-$package.apk" ]
+			then
+				echo "installing moded apk"
+				install "mod-$package.apk"
+
+			else
+				echo " trying to install plain apk"
+				install "$package.apk"
+			fi
+			;;
+		"exit")
+			break
+			;;
+		*) echo "invalid option";;
+	esac
+done
