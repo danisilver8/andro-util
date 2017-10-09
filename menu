@@ -29,12 +29,18 @@ do
 			;;
 		"backsmali")
 			echo "backsmalling $package"
-			backsmali "$package.apk"
+			apk="$package.apk"
+			smali_folder="smali-$package"
+			source_folder="source-$package"
+			
+			backsmali $apk $smali_folder $source_folder	
 			;;
 		"build")
 			echo "building $package"
-			build $package "mod-$package.apk"
-			sign "mod-$package.apk"
+			smali_folder="smali-$package"
+			source_folder="source-$package"
+			apk="mod-$package.apk"
+			create_apk $source_folder $smali_folder $apk
 			;;
 		"install")
 			echo "installing $package"
