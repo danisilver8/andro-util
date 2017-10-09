@@ -1,9 +1,19 @@
 #!/bin/bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-source $DIR/main.sh
+if source $DIR/main.sh 2> /dev/null
+then
+	echo "ok"
+else
+	DIR="$(dirname "$(readlink -f "$0")")"
+	source $DIR/main.sh
+fi
 
-read -p "enter package name:" package
+echo "dir: $DIR"
+echo "using package: $1"
+package=$1
+
+# read -p "enter package name:" package
 
 PS3='Please enter your choice: '
 options=("set-package" "pull" "backsmali" "build" "install" "exit")
