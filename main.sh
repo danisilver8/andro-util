@@ -68,7 +68,7 @@ align () {
 
 install (){
 	# $1 - apk to install
-	adb install $1
+	adb install -r $1
 }
 
 #### baksmali wrappers
